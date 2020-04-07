@@ -53,6 +53,25 @@ import EmeraldsView from "./components/EmeraldsView.vue";
 import HorseView from "./components/HorseView";
 import Interval from "./components/Interval";
 
+// 24 EB
+const brownHorsePrice = 24;
+
+const higherTierChance = 0.2;
+const sameTierChance = 0.5;
+// lower tier chance = 0.3;
+
+// Returns 1 if success, 0 if same tier, -1 if lower tier
+function breedResult() {
+  const res = Math.random();
+  if (res <= higherTierChance) {
+    return 1;
+  } else if (res <= higherTierChance + sameTierChance) {
+    return 0;
+  } else {
+    return -1;
+  }
+}
+
 export default {
   name: "App",
   components: {
@@ -86,9 +105,108 @@ export default {
   methods: {
     startBreeding() {
       this.isBreeding = true;
+      this.breedOnce();
     },
     endBreeding() {
       this.isBreeding = false;
+    },
+    hasReachedTarget() {
+      const allTargetZero =
+        this.target.brown <= 0 &&
+        this.target.black <= 0 &&
+        this.target.chestnut <= 0 &&
+        this.target.white <= 0;
+
+      return (
+        !allTargetZero &&
+        (this.target.brown <= 0 || this.target.brown <= this.current.brown) &&
+        (this.target.black <= 0 || this.target.black <= this.current.black) &&
+        (this.target.chestnut <= 0 ||
+          this.target.chestnut <= this.current.chestnut) &&
+        (this.target.white <= 0 || this.target.white <= this.current.white)
+      );
+    },
+    breedOnce() {
+      if (!this.isBreeding) {
+        return;
+      }
+
+      // Check if reached all target numbers
+      if (this.hasReachedTarget()) {
+        this.isBreeding = false;
+        return;
+      }
+
+      const allTargetZero =
+        this.target.brown <= 0 &&
+        this.target.black <= 0 &&
+        this.target.chestnut <= 0 &&
+        this.target.white <= 0;
+      const toBreedChestnut =
+        allTargetZero ||
+        this.target.white <= 0 ||
+        this.target.white > this.current.white;
+      const toBreedBlack =
+        allTargetZero ||
+        this.target.chestnut <= 0 ||
+        this.target.chestnut > this.current.chestnut;
+      const toBreedBrown =
+        allTargetZero ||
+        this.target.black <= 0 ||
+        this.target.black > this.current.black;
+
+      // Breed chestnut -> white
+      if (toBreedChestnut && this.current.chestnut >= 2) {
+        const res = breedResult();
+        if (res === 1) {
+          this.current.chestnut -= 2;
+          this.current.white++;
+        } else if (res === 0) {
+          this.current.chestnut--;
+        } else {
+          this.current.chestnut -= 2;
+          this.current.black++;
+        }
+      } else if (
+        // Breed black -> chestnut
+        (toBreedChestnut || toBreedBlack) &&
+        this.current.black >= 2
+      ) {
+        const res = breedResult();
+        if (res === 1) {
+          this.current.black -= 2;
+          this.current.chestnut++;
+        } else if (res === 0) {
+          this.current.black--;
+        } else {
+          this.current.black -= 2;
+          this.current.brown++;
+        }
+      } else if (
+        // Breed brown -> black
+        (toBreedChestnut || toBreedBlack || toBreedBrown) &&
+        this.current.brown >= 2
+      ) {
+        const res = breedResult();
+        if (res === 1) {
+          this.current.brown -= 2;
+          this.current.black++;
+        } else {
+          this.current.brown--;
+        }
+      } else {
+        // Buy brown
+        if (this.budget > 0 && this.budget <= this.spent + brownHorsePrice) {
+          // Used all budget
+          this.isBreeding = false;
+          return;
+        }
+
+        this.current.brown++;
+        this.spent += brownHorsePrice;
+      }
+
+      setTimeout(() => this.breedOnce(), this.interval);
     }
   }
 };

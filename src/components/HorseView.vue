@@ -9,22 +9,42 @@
       <div class="grid-item horse-name">Brown</div>
       <img class="grid-item" src="../assets/brown.png" alt="brown" />
       <div class="grid-item">{{ current.brown }}</div>
-      <input type="number" v-model="target.brown" class="grid-item" />
+      <input
+        type="number"
+        v-model="target.brown"
+        class="grid-item"
+        @change="() => this.onTargetChange(this.target)"
+      />
 
       <div class="grid-item horse-name">Black</div>
       <img class="grid-item" src="../assets/black.png" alt="brown" />
       <div class="grid-item">{{ current.black }}</div>
-      <input type="number" v-model="target.black" class="grid-item" />
+      <input
+        type="number"
+        v-model="target.black"
+        class="grid-item"
+        @change="() => this.onTargetChange(this.target)"
+      />
 
       <div class="grid-item horse-name">Chestnut</div>
       <img class="grid-item" src="../assets/chestnut.png" alt="brown" />
       <div class="grid-item">{{ current.chestnut }}</div>
-      <input type="number" v-model="target.chestnut" class="grid-item" />
+      <input
+        type="number"
+        v-model="target.chestnut"
+        class="grid-item"
+        @change="() => this.onTargetChange(this.target)"
+      />
 
       <div class="grid-item horse-name">White</div>
       <img class="grid-item" src="../assets/white.png" alt="brown" />
       <div class="grid-item">{{ current.white }}</div>
-      <input type="number" v-model="target.white" class="grid-item" />
+      <input
+        type="number"
+        v-model="target.white"
+        class="grid-item"
+        @change="() => this.onTargetChange(this.target)"
+      />
     </div>
   </div>
 </template>

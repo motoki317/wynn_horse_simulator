@@ -11,6 +11,7 @@
           class="slider"
           id="interval"
           v-model="intervalInput"
+          @change="() => this.onIntervalChange(this.interval)"
         />
         <span>{{ maxInterval }} ms</span>
       </label>
