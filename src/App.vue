@@ -32,6 +32,19 @@
         :on-target-change="newTargets => (this.target = newTargets)"
       ></HorseView>
     </div>
+
+    <p class="credit">
+      <a href="https://github.com/motoki317/wynn_horse_simulator"
+        >GitHub repository</a
+      >
+    </p>
+    <p class="credit">
+      Made by <a href="https://forums.wynncraft.com/members/32964/">motoki1</a>,
+      images are from <a href="https://wynncraft.com">Wynncraft</a> and
+      <a href="https://forums.wynncraft.com/threads/210764/"
+        >Wynn Improvements</a
+      >.
+    </p>
   </div>
 </template>
 
@@ -136,5 +149,12 @@ button:focus {
   height: 400px;
   border: 1px #888 solid;
   border-radius: 5px;
+}
+
+.credit {
+  margin: 15px;
+  font-size: 12px;
+  opacity: 0.8;
+  text-align: right;
 }
 </style>
