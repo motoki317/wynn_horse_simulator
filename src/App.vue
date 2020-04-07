@@ -1,17 +1,20 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <span id="title">Wynncraft Horse Breeding Simulator</span>
+    <EmeraldsView></EmeraldsView>
+    <HorseView></HorseView>
   </div>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
+import EmeraldsView from "./components/EmeraldsView.vue";
+import HorseView from "./components/HorseView";
 
 export default {
   name: "App",
   components: {
-    HelloWorld
+    EmeraldsView,
+    HorseView
   }
 };
 </script>
