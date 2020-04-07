@@ -9,12 +9,20 @@
       To specify no budget or no target, leave them at 0.
     </p>
 
-    <button :disabled="isBreeding" @click="() => this.startBreeding()">
-      Start Breeding
-    </button>
-    <button :disabled="!isBreeding" @click="() => this.endBreeding()">
-      Stop Breeding
-    </button>
+    <p>
+      <button :disabled="isBreeding" @click="() => this.startBreeding()">
+        Start Breeding
+      </button>
+      <button :disabled="!isBreeding" @click="() => this.endBreeding()">
+        Stop Breeding
+      </button>
+    </p>
+
+    <p>
+      <button @click="() => this.reset()">
+        Reset
+      </button>
+    </p>
 
     <Interval
       :on-interval-change="newInterval => (this.interval = newInterval)"
@@ -109,6 +117,22 @@ export default {
     },
     endBreeding() {
       this.isBreeding = false;
+    },
+    reset() {
+      this.isBreeding = false;
+      this.spent = 0;
+      this.current = {
+        brown: 0,
+        black: 0,
+        chestnut: 0,
+        white: 0
+      };
+      this.target = {
+        brown: 0,
+        black: 0,
+        chestnut: 0,
+        white: 0
+      };
     },
     hasReachedTarget() {
       const allTargetZero =

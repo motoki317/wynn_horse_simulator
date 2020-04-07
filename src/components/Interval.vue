@@ -20,7 +20,7 @@
 </template>
 
 <script>
-const minInterval = 5;
+const minInterval = 1;
 const maxInterval = 1000;
 
 const minInput = 0;
