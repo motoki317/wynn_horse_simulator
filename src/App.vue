@@ -6,7 +6,7 @@
       Input your budget and target horse numbers, and click "Start Breeding"!
     </p>
     <p>
-      To specify no budget, leave it at 0 emeralds.
+      To specify no budget or no target, leave them at 0.
     </p>
 
     <button :disabled="isBreeding" @click="() => this.startBreeding()">
@@ -50,9 +50,12 @@ export default {
   data: function() {
     return {
       isBreeding: false,
+      // breeding interval in ms
       interval: 100,
+      // budget and spent money in EB
       budget: 0,
       spent: 0,
+      // current and target horse amounts
       current: {
         brown: 0,
         black: 0,

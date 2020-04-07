@@ -2,6 +2,24 @@
   <div>
     <div id="grid-container">
       <div class="grid-item" id="title">Emeralds</div>
+      <div class="grid-item" id="stacks-container">
+        <img
+          src="../assets/experience_bottle.png"
+          alt="experience_bottle"
+          class="bottle-top"
+        />
+        <img
+          src="../assets/experience_bottle.png"
+          alt="experience_bottle"
+          class="bottle-bottom-1"
+        />
+        <img
+          src="../assets/experience_bottle.png"
+          alt="experience_bottle"
+          class="bottle-bottom-2"
+        />
+      </div>
+      <div class="grid-item"></div>
       <img
         src="../assets/experience_bottle.png"
         alt="experience_bottle"
@@ -14,10 +32,15 @@
         class="grid-item"
       />
       <div class="grid-item"></div>
-      <img src="../assets/emerald.png" alt="emerald" class="grid-item" />
-      <div class="grid-item"></div>
 
       <span class="grid-item left-bar">Budget</span>
+      <input
+        class="grid-item"
+        type="number"
+        v-model="budgetStacks"
+        @change="() => onBudgetChange(this.budget)"
+      />
+      <span class="grid-item unit">Stx</span>
       <input
         class="grid-item"
         type="number"
@@ -32,36 +55,29 @@
         @change="() => onBudgetChange(this.budget)"
       />
       <span class="grid-item unit">EB</span>
-      <input
-        class="grid-item"
-        type="number"
-        v-model="budgetE"
-        @change="() => onBudgetChange(this.budget)"
-      />
-      <span class="grid-item unit">E</span>
 
       <span class="grid-item left-bar">Spent</span>
+      <span class="grid-item">{{ spentStacks }}</span>
+      <span class="grid-item unit">Stx</span>
       <span class="grid-item">{{ spentLE }}</span>
       <span class="grid-item unit">LE</span>
       <span class="grid-item">{{ spentEB }}</span>
       <span class="grid-item unit">EB</span>
-      <span class="grid-item">{{ spentE }}</span>
-      <span class="grid-item unit">E</span>
     </div>
   </div>
 </template>
 
 <script>
-function toLE(emeralds) {
+function toStacks(emeralds) {
   return Math.floor(emeralds / 64 / 64);
 }
 
-function toEB(emeralds) {
-  return Math.floor(emeralds / 64) - toLE(emeralds) * 64;
+function toLE(emeralds) {
+  return Math.floor(emeralds / 64) - toStacks(emeralds) * 64;
 }
 
-function toE(emeralds) {
-  return emeralds - toLE(emeralds) * 64 * 64 - toEB(emeralds) * 64;
+function toEB(emeralds) {
+  return emeralds - toStacks(emeralds) * 64 * 64 - toLE(emeralds) * 64;
 }
 
 export default {
@@ -72,23 +88,23 @@ export default {
   },
   data: function() {
     return {
+      budgetStacks: 0,
       budgetLE: 0,
-      budgetEB: 0,
-      budgetE: 0
+      budgetEB: 0
     };
   },
   computed: {
     budget() {
-      return this.budgetLE * 64 * 64 + this.budgetEB * 64 + this.budgetE;
+      return this.budgetStacks * 64 * 64 + this.budgetLE * 64 + this.budgetEB;
+    },
+    spentStacks() {
+      return toStacks(this.spent);
     },
     spentLE() {
       return toLE(this.spent);
     },
     spentEB() {
       return toEB(this.spent);
-    },
-    spentE() {
-      return toE(this.spent);
     }
   }
 };
@@ -127,7 +143,38 @@ img {
 }
 
 .unit {
+  margin: auto 0;
   text-align: left;
+}
+
+#stacks-container {
+  position: relative;
+  width: 64px;
+  height: 64px;
+}
+
+.bottle-top {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  z-index: 1;
+  width: 48px;
+}
+
+.bottle-bottom-1 {
+  position: absolute;
+  top: 0;
+  left: 8px;
+  z-index: 0;
+  width: 40px;
+}
+
+.bottle-bottom-2 {
+  position: absolute;
+  top: 0;
+  left: 32px;
+  z-index: 0;
+  width: 40px;
 }
 
 input[type="number"] {
