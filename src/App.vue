@@ -168,16 +168,14 @@ export default {
         this.target.white <= 0;
       const toBreedChestnut =
         allTargetZero ||
-        this.target.white <= 0 ||
-        this.target.white > this.current.white;
+        (this.target.white > 0 && this.target.white > this.current.white);
       const toBreedBlack =
         allTargetZero ||
-        this.target.chestnut <= 0 ||
-        this.target.chestnut > this.current.chestnut;
+        (this.target.chestnut > 0 &&
+          this.target.chestnut > this.current.chestnut);
       const toBreedBrown =
         allTargetZero ||
-        this.target.black <= 0 ||
-        this.target.black > this.current.black;
+        (this.target.black > 0 && this.target.black > this.current.black);
 
       // Breed chestnut -> white
       if (toBreedChestnut && this.current.chestnut >= 2) {
