@@ -127,12 +127,6 @@ export default {
         chestnut: 0,
         white: 0
       };
-      this.target = {
-        brown: 0,
-        black: 0,
-        chestnut: 0,
-        white: 0
-      };
     },
     hasReachedTarget() {
       const allTargetZero =
